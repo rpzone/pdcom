@@ -72,7 +72,7 @@
 
                 if (pageNoteUi.length > 0) {
                     pageNoteUi += "<div class='lineDivider'></div>";
-                    var pageNotesHeader = "<div id='pageNotesSectionHeader' class='notesSectionHeader pluginNameHeader'>Page Notes</div>";
+                    var pageNotesHeader = "<div id='pageNotesSectionHeader' class='notesSectionHeader pluginNameHeader'>Page notes</div>";
                     $('#pageNotesContent').append(pageNotesHeader + pageNoteUi);
                 }
             }

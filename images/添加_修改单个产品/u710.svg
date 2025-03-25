@@ -1,6 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<svg version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="12px" height="12px" viewBox="298 161 12 12" xmlns="http://www.w3.org/2000/svg">
-  <path d="M 304 161  C 307.36 161  310 163.64  310 167  C 310 170.36  307.36 173  304 173  C 300.64 173  298 170.36  298 167  C 298 163.64  300.64 161  304 161  Z " fill-rule="nonzero" fill="rgba(255, 255, 255, 1)" stroke="none" class="fill" />
-  <path d="M 304 161.5  C 307.08 161.5  309.5 163.92  309.5 167  C 309.5 170.08  307.08 172.5  304 172.5  C 300.92 172.5  298.5 170.08  298.5 167  C 298.5 163.92  300.92 161.5  304 161.5  Z " stroke-width="1" stroke-dasharray="0" stroke="rgba(121, 121, 121, 1)" fill="none" class="stroke" stroke-dashoffset="0.5" />
-  <path d="M 304 170  C 302.32 170  301 168.68  301 167  C 301 165.32  302.32 164  304 164  C 305.68 164  307 165.32  307 167  C 307 168.68  305.68 170  304 170  " fill-rule="nonzero" fill="rgba(121, 121, 121, 1)" stroke="none" class="stroke btn_check" />
+<svg version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="12px" height="12px" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="BGPattern" patternUnits="userSpaceOnUse" alignment="0 0" imageRepeat="None" />
+  </defs>
+  <g transform="matrix(1 0 0 1 -935 -214 )">
+    <path d="M 0 0  L 12 0  L 12 12  L 0 12  L 0 0  Z " fill-rule="nonzero" fill="rgba(255, 255, 255, 1)" stroke="none" transform="matrix(1 0 0 1 935 214 )" class="fill" />
+    <path d="M 0.5 0.5  L 11.5 0.5  L 11.5 11.5  L 0.5 11.5  L 0.5 0.5  Z " stroke-width="1" stroke-dasharray="0" stroke="rgba(121, 121, 121, 1)" fill="none" transform="matrix(1 0 0 1 935 214 )" class="stroke" stroke-dashoffset="0.5" />
+    <path d="M 2.571428571428571 6  L 5.142857142857143 8.571428571428571  L 9.428571428571429 2.571428571428571  " stroke-width="2.571428571428571" stroke-dasharray="0" stroke="rgba(121, 121, 121, 1)" fill="none" transform="matrix(1 0 0 1 935 214 )" class="stroke btn_check" />
+  </g>
 </svg>

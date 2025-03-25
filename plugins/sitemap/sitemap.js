@@ -62,8 +62,8 @@ var openPreviousPage = $axure.player.openPreviousPage = function () {
         $('#interfaceAdaptiveViewsListContainer').hide();
 
         $('#projectOptionsShowHotspots').click(showHotspots_click);
-        $('#searchIcon').click(searchBoxClose_click);
-        $('#searchDiv').click(searchBoxExpand_click);
+        $('#searchIcon').click(searchBoxExpand_click);
+        $('#clearSearchIcon').click(searchBoxClose_click);
         $('#searchBox').keyup(search_input_keyup);
 
         // bind to the page load
@@ -89,6 +89,11 @@ var openPreviousPage = $axure.player.openPreviousPage = function () {
                 var currentNum = $('.sitemapPageLink').index(currentNode) + 1;
                 $('.pageCountHeader').html('(' + currentNum + ' of ' + pageCount + ')');
             } else $('.pageCountHeader').html('');
+
+
+            if ($('.sitemapExpandableNode').length > 0) {
+                setExpandCollapseState(false);
+            }
 
             // expand all parent nodes
             if ($currentNode.length > 0) {
@@ -306,7 +311,7 @@ var openPreviousPage = $axure.player.openPreviousPage = function () {
     function setExpandCollapseState(collapsedAll) {
         if (collapsedAll == _collapsedAll) return;
         _collapsedAll = collapsedAll;
-        $("#expandCollapseAll").text(_collapsedAll ? "Expand all" : "Collapse all");
+        $("#expandCollapseAll").attr("class", "sitemapToolbarButton " + (_collapsedAll ? "collapsed" : "expanded"));
     }
 
     function expandCollapseAll_click(e) {
@@ -333,24 +338,12 @@ var openPreviousPage = $axure.player.openPreviousPage = function () {
     }
 
     function searchBoxExpand_click(event) {
-        if (!$('#searchIcon').hasClass('sitemapToolbarButtonSelected')) {
-            $('#searchIcon').addClass('sitemapToolbarButtonSelected')
-            $('#searchBox').width(0);
-            $('#searchBox').show();
-            $('#searchBox').animate({ width: '95%' }, { duration: 200, complete: function () { $('#searchBox').focus(); } });
-        }
+        $('#searchBox').focus();
     }
 
     function searchBoxClose_click(event) {
-        if ($('#searchIcon').hasClass('sitemapToolbarButtonSelected')) {
-            $('#searchBox').animate({ width: '0%' }, { duration: 200,
-                complete: function () {
-                    $('#searchBox').hide();
-                    $('#searchIcon').removeClass('sitemapToolbarButtonSelected')
-                }});
-            $('#searchBox').val('');
-            $('#searchBox').keyup();
-        }
+        $('#searchBox').val('');
+        $('#searchBox').keyup();
     }
 
     function node_click(event) {
@@ -514,9 +507,10 @@ var openPreviousPage = $axure.player.openPreviousPage = function () {
         if(searchVal == '') {
             $('.sitemapPageName').removeClass('sitemapGreyedName');
             $('.sitemapNode').show();
+            $('#clearSearchIcon').attr('class', '');
         } else {
             $('.sitemapNode').hide();
-
+            $('#clearSearchIcon').attr('class', 'visible');
             $('.sitemapPageName').addClass('sitemapGreyedName').each(function() {
                 var nodeName = $(this).text().toLowerCase();
                 if(nodeName.indexOf(searchVal) != -1) {
@@ -540,9 +534,9 @@ var openPreviousPage = $axure.player.openPreviousPage = function () {
         treeUl += "<div class='leftArrow sitemapToolbarButton'></div>";
         treeUl += "<div class='rightArrow sitemapToolbarButton'></div>";
         treeUl += "</div>";
-        treeUl += "<div class='toolbarRow'>"
-        treeUl += "<div id='searchDiv'><span id='searchIcon' class='sitemapToolbarButton'></span><input id='searchBox' type='text'/></div>";
-        treeUl += "<div id='expandCollapseAll'>Expand all</div>"
+        treeUl += "<div class='toolbarRow searchBar'>"
+        treeUl += "<div id='searchDiv'><span id='searchIcon'></span><input id='searchBox' type='text' placeholder='Search' /><span id='clearSearchIcon'></span></div>";
+        treeUl += "<div id='expandCollapseAll'></div>"
         treeUl += "</div>";
         treeUl += "</div>";
         treeUl += "</div>";

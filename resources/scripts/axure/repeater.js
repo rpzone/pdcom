@@ -2407,7 +2407,7 @@ $axure.internal(function ($ax) {
         var obj = parent && $ax.getObjectFromElementId($ax.repeater.removeSuffixFromElementId(parent));
         // Go until you hit a parent item or state, or a layer that is hidden to use as parent.
         // Account for layer container positions as you go.
-        while(obj && $ax.public.fn.IsLayer(obj.type) && $ax.visibility.IsIdVisible(parent)) {
+        while(obj && $ax.public.fn.IsLayerOrRdo(obj.type) && $ax.visibility.IsIdVisible(parent)) {
             var container = $ax.visibility.applyWidgetContainer(parent, true, true);
             // If layer is using container, offset is going to be necessary
             if(container.length) {
@@ -2420,7 +2420,7 @@ $axure.internal(function ($ax) {
                 clamp.end += clampProp;
             }
 
-            parent = $ax('#' + parent).getParents(false, ['item', 'state', 'layer'])[0];
+            parent = $ax('#' + parent).getParents(false, ['item', 'state', 'layer', 'rdo'])[0];
             obj = parent && $ax.getObjectFromElementId($ax.repeater.removeSuffixFromElementId(parent));
         }
 
@@ -2490,11 +2490,11 @@ $axure.internal(function ($ax) {
         layerClamp = clamp.prop == 'left' ? [boundingRect.left] : [boundingRect.top];
         layerClamp[1] = layerClamp[0] + (clamp.offset == 'width' ? boundingRect.width : boundingRect.height);
 
-        if (parentLayer) {
-            var axParent = $ax('#' + parentLayer);
-            marker -= Number(axParent[vert ? 'top' : 'left'](true));
-            layerClamp[0] -= Number(axParent[clamp.prop](true));
-        }
+        // if (parentLayer) {
+        //     var axParent = $ax('#' + parentLayer);
+        //     marker -= Number(axParent[vert ? 'top' : 'left'](true));
+        //     layerClamp[0] -= Number(axParent[clamp.prop](true));
+        // }
 
         if (isNaN(marker) || isNaN(layerClamp[0]) || isNaN(layerClamp[1]) ||
             marker < threshold || layerClamp[1] <= clamp.start || layerClamp[0] >= clamp.end) {
@@ -2534,23 +2534,29 @@ $axure.internal(function ($ax) {
                     continue;
                 }
 
-                $ax.visibility.pushContainer(childId, false);
                 var addSelf;
-                var container = $ax.visibility.applyWidgetContainer(childId, true, true);
-                var layerChildren = (container.length ? container : child).children();
-                //if(container.length) {
-                var offsetX = -$ax.getNumFromPx(container.css('left'));
-                var offsetY = -$ax.getNumFromPx(container.css('top'));
-                var clampProp = clamp.prop == 'left' ? offsetX : offsetY;
-                var threshProp = clamp.prop == 'left' ? offsetY : offsetX;
+                var clampProp = 0;
+                var threshProp = 0;
+                var layerChildren = child.children();
+                var isLayer = $ax.public.fn.IsLayer($ax.getTypeFromElementId(childId));
+                // if(isLayer) {
+                //     $ax.visibility.pushContainer(childId, false);
+                //     var container = $ax.visibility.applyWidgetContainer(childId, true, true);
+                //     layerChildren = (container.length ? container : child).children();
+                //     var offsetX = -$ax.getNumFromPx(container.css('left'));
+                //     var offsetY = -$ax.getNumFromPx(container.css('top'));
+                //     clampProp = clamp.prop == 'left' ? offsetX : offsetY;
+                //     threshProp = clamp.prop == 'left' ? offsetY : offsetX;
+                // }
+                // if(!layerChildren) layerChildren = child.children();
                 var layerClamp = { prop: clamp.prop, offset: clamp.offset, start: clamp.start + clampProp, end: clamp.end + clampProp };
                 
                 if(!parentids.includes(childId) && _objectNeedsCompress(childId, vert, threshold, clamp, parentLayer)) addSelf = true;
-                else addSelf = _compressChildrenHelper(id, layerChildren, vert, threshold + threshProp, delta, layerClamp, easing, duration, childId);
+                else addSelf = _compressChildrenHelper(id, layerChildren, vert, threshold + threshProp, delta, layerClamp, easing, duration, isLayer ? childId : parentLayer);
                 
                 if(addSelf) toMove.push(childId);
                 else allMove = false;
-                $ax.visibility.popContainer(childId, false);
+                // if(isLayer) $ax.visibility.popContainer(childId, false);
                 continue;
             }
 
@@ -2579,11 +2585,11 @@ $axure.internal(function ($ax) {
         marker = Number(axChild[markerProp](true));
         childClamp = [Number(axChild[clamp.prop](true))];
 
-        if(parentLayer) {
-            var axParent = $ax('#' + parentLayer);
-            marker -= Number(axParent[markerProp](true));
-            childClamp[0] -= Number(axParent[clamp.prop](true));
-        }
+        // if(parentLayer) {
+        //     var axParent = $ax('#' + parentLayer);
+        //     marker -= Number(axParent[markerProp](true));
+        //     childClamp[0] -= Number(axParent[clamp.prop](true));
+        // }
 
         // Dynamic panels are not reporting correct size sometimes, so pull it from the state. Get shown state just returns the widget if it is not a dynamic panel.
         var sizeChild = _getShownStateObj(id);

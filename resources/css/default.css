@@ -59,15 +59,15 @@ input[type=text]::-ms-clear {
 }
 
 .splitbar:hover, .splitbar.active {
-    background: #CBD5E0;
+    background: #E2E8F0;
 }
 
 #lsplitbar {
-    border-right: 1px solid #CBD5E0;
+    border-right: 1px solid #E2E8F0;
 }
 
 #rsplitbar {
-    border-left: 1px solid #CBD5E0;
+    border-left: 1px solid #E2E8F0;
 }
 
 #mainPanel {
@@ -635,7 +635,7 @@ input[type=text]::-ms-clear {
     display: block;
     width: 1px;
     height: 100%;
-    background-color: #CBD5E0;
+    background-color: #E2E8F0;
 }
 
 #interfacePageNameContainer {
@@ -856,6 +856,9 @@ input[type=text]::-ms-clear {
     font-size: 14px;
     font-weight: 500;
     flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
 }
 
 .mobileMode .pluginNameHeader {
@@ -1018,7 +1021,7 @@ div.mobileText, span.mobileText {
 
 .closeButtonContainer {
     position: absolute;
-    right: 0;
+    right: 11px;
     top: 10px;
 }
 

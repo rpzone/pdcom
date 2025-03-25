@@ -432,6 +432,7 @@ $axure.internal(function($ax) {
         var $container = _getMeasureContainer();
         jobj = jobj.clone();
         $container.append(jobj);
+        jobj.css('display', 'block');
         
         return {
             jObject: jobj,

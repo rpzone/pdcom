@@ -915,7 +915,10 @@
 
         _updateCornersForBorders(id, fullStyle);
 
-        if(hasNotrs) disableStateTransitionsOnEnd(id, _idToAppliedStyles[id].style.transition);
+        if(hasNotrs) {
+            var transition = _idToAppliedStyles[id] && _idToAppliedStyles[id].style ? _idToAppliedStyles[id].style.transition : undefined;
+            disableStateTransitionsOnEnd(id, transition);
+        }
     }
 
     var _clearWidgetAppliedCorners = function(jobjDiv) {
@@ -1046,7 +1049,9 @@
                             backgroundElement.setAttribute("fill", "url(" + bgPatternId + ")");
                             fillElement.after(backgroundElement);
                         }
-                        image.setAttribute("href", overridedStyle.image.path);
+                        // disable caching since these files may have the same names in different prototypes. RP-3338
+                        var imageHref = overridedStyle.image.path + "?v=" + Date.now();
+                        image.setAttribute("href", imageHref);
 
                         var patternRect = {
                             x: 0,
@@ -1054,6 +1059,13 @@
                             width: overridedStyle.size.width,
                             height: overridedStyle.size.height,
                         };
+
+                        var isRadioOrCheck = $ax.public.fn.IsCheckBox(obj.type) || $ax.public.fn.IsRadioButton(obj.type);
+                        if (isRadioOrCheck) {
+                            patternRect.width = overridedStyle.buttonSize;
+                            patternRect.height = overridedStyle.buttonSize;
+                        }
+
                         var imageRect = {
                             x: 0,
                             y: 0,
@@ -1498,7 +1510,7 @@
                             var currentStops = currentGrad.querySelectorAll("stop");
                             if (currentStops.length == stops.length) {
                                 for (var i = 0, length = stops.length; i < length; i++) {
-                                    styleHtml += "#" + currentGradId + " stop:nth-of-type(" + (i + 1) + ") { stop-color:" + _getColorFromArgbColorProp(stops[i].color) + " } ";
+                                    styleHtml += "#" + currentGradId + " stop:nth-of-type(" + (i + 1) + ") { stop-color:" + _getColorFromArgbColorProp(stops[i].color) + "; stop-opacity:1; } ";
                                 }
                                 styleHtml += "#" + currentGradId + " stop { " + transition + " } ";
 
@@ -1576,7 +1588,7 @@
                             var currentStops = currentGrad.querySelectorAll("stop");
                             if (currentStops.length == stops.length) {
                                 for (var i = 0, length = stops.length; i < length; i++) {
-                                    styleHtml += "#" + currentGradId + " stop:nth-of-type(" + (i + 1) + ") { stop-color:" + _getColorFromArgbColorProp(stops[i].color) + " } ";
+                                    styleHtml += "#" + currentGradId + " stop:nth-of-type(" + (i + 1) + ") { stop-color:" + _getColorFromArgbColorProp(stops[i].color) + "; stop-opacity:1; } ";
                                 }
                                 styleHtml += "#" + currentGradId + " stop { " + transition + " } ";
                                 currentGrad.setAttribute("cx", viewBoxX + center.x);
