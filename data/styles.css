@@ -90,9 +90,12 @@
 .marker {
   color:#FFFFFF;
 }
+.form_hint {
+  color:#999999;
+}
 .form_disabled {
 }
-.form_hint {
+.form_hint1 {
   color:#999999;
 }
 .form_disabled1 {
@@ -103,11 +106,15 @@
 }
 .arrow {
 }
+.text_field {
+  color:#000000;
+  text-align:left;
+}
 .label {
   font-size:12px;
   text-align:left;
 }
-.text_field {
+.text_field1 {
   color:#000000;
   text-align:left;
 }
@@ -124,7 +131,7 @@
   text-align:left;
 }
 .checkbox {
-  font-family:"微软雅黑", sans-serif;
+  font-family:'微软雅黑', sans-serif;
   font-weight:400;
   font-style:normal;
   text-align:left;
