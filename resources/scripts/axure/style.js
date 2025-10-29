@@ -880,9 +880,6 @@
             _clearWidgetAppliedStyles(id);
         }
 
-        var styleBase = style.baseStyle && $ax.document.stylesheet.stylesById[style.baseStyle];
-        style = $.extend({}, styleBase, style);
-
         if (_idToAppliedStyles[id] && _idToAppliedStyles[id].classList && _idToAppliedStyles[id].style) {
             var index = _idToAppliedStyles[id].classList.indexOf(className);
             if (index > -1) _idToAppliedStyles[id].classList.splice(index, 1);
@@ -906,7 +903,6 @@
         $jobj($ax.repeater.applySuffixToElementId(id, '_input')).addClass(className);
 
         const state = _generateState(id);
-
         var fullStyle = $.extend(_computeFullStyle(id, state, $ax.adaptive.currentViewId), _idToAppliedStyles[id].style);
 
         if ($ax.public.fn.IsImageBox($obj(id).type)) {
@@ -1370,7 +1366,6 @@
 
                     styleHtml += "#" + svgId + " .stroke { " + borderStyle + " } ";
                     styleHtml += "#" + svgId + " .arrowhead { " + arrowHeadStyle + " } ";
-                    if (obj.friendlyType.toLowerCase() === "vertical line" || obj.friendlyType.toLowerCase() === "horizontal line"  || obj.friendlyType.toLowerCase() === "line") { styleHtml += "#" + svgId + " { overflow:visible; } "; }
 
                     if($ax.public.fn.IsCheckBox(obj.type)) {
                         var checkWidth = 3 * obj.buttonSize / 14;

@@ -311,7 +311,7 @@ div.annnote {
     pointer-events: none;
 }
 
-.nopointer > *:not(.nopointer) {
+.nopointer > * {
     pointer-events: auto;
 }
 
